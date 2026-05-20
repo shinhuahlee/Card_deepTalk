@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>心靈對話 | 深刻認識一個人</title>
     <style>
         :root {
@@ -21,60 +21,72 @@
             outline: none;
         }
 
+        html,
         body {
             margin: 0;
+            width: 100%;
+            min-height: 100%;
+            overflow: hidden;
+        }
+
+        body {
             background: linear-gradient(135deg, #fdfaf7 0%, #e8f0f2 100%);
             font-family: "PingFang TC", "Hiragino Sans GB", "Microsoft JhengHei", sans-serif;
             color: var(--text-main);
-            overflow: hidden;
-            height: 100vh;
+            height: 100dvh;
         }
 
         .app-container {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100dvh;
+            padding-top: max(12px, env(safe-area-inset-top));
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
         }
 
         header {
-            padding: 40px 20px 10px;
+            padding: 20px 16px 8px;
             text-align: center;
             position: relative;
             z-index: 10;
         }
 
         #levelLabel {
-            font-size: 0.65rem;
-            letter-spacing: 4px;
+            font-size: 0.62rem;
+            letter-spacing: 2px;
             color: #b0b0b0;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             text-transform: uppercase;
+            padding: 0 48px;
         }
 
         #levelName {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 600;
             color: #666;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            padding: 0 48px;
         }
 
         #levelLogic {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--accent-soft);
             margin-top: 8px;
             font-weight: 400;
             opacity: 0.9;
+            padding: 0 24px;
+            line-height: 1.5;
         }
 
         .menu-trigger {
             position: absolute;
-            right: 20px;
-            top: 45px;
-            background: rgba(255, 255, 255, 0.8);
+            right: 16px;
+            top: 18px;
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(10px);
             border: none;
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             cursor: pointer;
             box-shadow: 0 4px 15px var(--shadow-soft);
@@ -82,6 +94,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 2;
         }
 
         .scene {
@@ -89,14 +102,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 12px 16px;
             perspective: 2000px;
+            min-height: 0;
         }
 
         .card {
-            width: 100%;
-            max-width: 310px;
-            aspect-ratio: 1/1.4;
+            width: min(100%, 320px);
+            aspect-ratio: 1 / 1.42;
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -104,7 +117,7 @@
         }
 
         .card.is-flipped {
-            transform: rotateY(180deg) scale(1.05);
+            transform: rotateY(180deg) scale(1.03);
         }
 
         .card-face {
@@ -112,13 +125,13 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 45px;
+            border-radius: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 45px;
+            padding: 28px 24px;
             text-align: center;
-            box-shadow: 0 25px 55px var(--shadow-soft);
+            box-shadow: 0 18px 40px var(--shadow-soft);
             border: 1px solid rgba(255, 255, 255, 0.9);
         }
 
@@ -142,31 +155,34 @@
         }
 
         .logo-icon {
-            font-size: 4.5rem;
+            font-size: 4rem;
             z-index: 2;
             opacity: 0.9;
         }
 
         #questionText {
-            font-size: 1.45rem;
-            line-height: 1.8;
+            font-size: clamp(1.1rem, 4.4vw, 1.35rem);
+            line-height: 1.75;
             color: #444;
             font-weight: 500;
+            word-break: break-word;
         }
 
         footer {
-            padding: 20px 30px 60px;
+            padding: 8px 16px calc(16px + env(safe-area-inset-bottom));
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .progress-text,
         .notice-text {
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+            line-height: 1.45;
+            max-width: 320px;
         }
 
         .progress-text {
@@ -175,12 +191,12 @@
 
         .notice-text {
             color: var(--notice-soft);
-            min-height: 1.2em;
+            min-height: 2.4em;
         }
 
         .btn-row {
             width: 100%;
-            max-width: 280px;
+            max-width: 320px;
             display: flex;
             gap: 10px;
         }
@@ -190,25 +206,25 @@
         .prev-btn {
             border: none;
             width: 100%;
-            padding: 18px;
-            border-radius: 35px;
-            font-size: 1rem;
+            padding: 16px 14px;
+            border-radius: 24px;
+            font-size: 0.96rem;
             font-weight: 600;
-            box-shadow: 0 10px 30px var(--shadow-soft);
+            box-shadow: 0 10px 24px var(--shadow-soft);
             transition: 0.3s;
         }
 
         .draw-btn {
             background: #ffffff;
             color: #7a7a7a;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .prev-btn {
             background: #f3f7f7;
             color: #6f8f8b;
             font-size: 0.92rem;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .prev-btn:disabled {
@@ -220,15 +236,15 @@
         .reset-btn {
             background: #fff7f7;
             color: var(--danger-soft);
-            font-size: 0.92rem;
-            letter-spacing: 1px;
-            max-width: 280px;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            max-width: 320px;
         }
 
         .menu-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(100, 90, 80, 0.05);
+            background: rgba(100, 90, 80, 0.08);
             backdrop-filter: blur(15px);
             display: flex;
             align-items: flex-end;
@@ -246,11 +262,11 @@
         .menu-content {
             background: #ffffff;
             width: 100%;
-            padding: 35px 25px 50px;
-            border-radius: 50px 50px 0 0;
+            padding: 28px 18px calc(28px + env(safe-area-inset-bottom));
+            border-radius: 28px 28px 0 0;
             transform: translateY(100%);
             transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
-            max-height: 85vh;
+            max-height: 82dvh;
             overflow-y: auto;
         }
 
@@ -261,19 +277,19 @@
         .menu-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             margin-top: 15px;
         }
 
         .menu-btn {
             background: #fdfdfd;
             border: 1px solid #f5f5f5;
-            padding: 18px 20px;
-            border-radius: 25px;
+            padding: 16px;
+            border-radius: 20px;
             text-align: left;
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 14px;
             transition: 0.3s;
             cursor: pointer;
         }
@@ -287,13 +303,14 @@
         .menu-btn .btn-title {
             font-weight: 600;
             color: #555;
-            font-size: 1rem;
+            font-size: 0.98rem;
         }
 
         .menu-btn .btn-desc {
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             color: #999;
             margin-top: 4px;
+            line-height: 1.4;
         }
 
         .menu-btn.active {
@@ -336,6 +353,29 @@
         .theme-rand {
             background: linear-gradient(135deg, #fdfaf7, #faedcd);
         }
+
+        @media (min-width: 768px) {
+            header {
+                padding-top: 32px;
+            }
+
+            .scene {
+                padding: 20px;
+            }
+
+            .card {
+                max-width: 340px;
+            }
+
+            .card-face {
+                border-radius: 40px;
+                padding: 36px 32px;
+            }
+
+            footer {
+                padding-top: 14px;
+            }
+        }
     </style>
 </head>
 
@@ -349,7 +389,7 @@
             <button class="menu-trigger" onclick="window.toggleMenu()">
                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                     <path
-                        d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.413.413-1.413 2.397 0 2.81l.34.1c.895.264 1.318 1.286.872 2.105l-.17.31c-.698 1.283.705 2.686 1.988 1.987l.31-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.413 2.397 1.413 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.988l-.169-.31a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.413-.413 1.413-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.988-1.987l-.31.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.93 2.93 0 1 1 0-5.86 2.93 2.93 0 0 1 0 5.86z" />
+                        d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.413.413-1.413 2.397 0 2.81l.34.1c.895.264 1.318 1.285.872 2.105l-.17.31c-.698 1.283.705 2.686 1.988 1.987l.31-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.413 2.397 1.413 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.988l-.169-.31a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.413-.413 1.413-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.988-1.987l-.31.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93A2.93 2.93 0 1 1 8 5.07a2.93 2.93 0 0 1 0 5.86z" />
                 </svg>
             </button>
         </header>
@@ -449,13 +489,13 @@
         const STORAGE_KEY = 'deepTalkProgressV3';
 
         const allQuestions = [
-            ["你認為人生最重要的是什麼？為什麼？", "如果只能選一個：自由、金錢、愛、成就，你選哪個？", "你最不能接受的價值觀是什麼？", "你覺得一個人窮沒關係，還是沒責任感比較嚴重？", "你相信努力一定有回報嗎？", "你怎麼看待忠誠？", "如果愛和麵包衝突，你怎麼選？", "你會為了理想放棄穩定嗎？", "你覺得伴侶三觀不同還能走下去嗎？", "你會因為價值觀不合離開一個很愛的人嗎？"],
-            ["你在愛裡最害怕的是什麼？", "你會為了愛改變自己嗎？", "你覺得安全感應該自己給還是對方給？", "你需要每天聯絡嗎？", "你怎麼定義背叛？", "你能接受冷戰嗎？", "你愛一個人會變黏還是變獨立？", "你覺得愛是選擇還是感覺？", "你會因為缺乏安全感去測試對方嗎？", "你最渴望被怎樣愛？"],
-            ["你工作是為了錢還是成就感？", "你願意為升遷犧牲多少？", "你可以接受不喜歡的工作多久？", "你有野心嗎？多大？", "你羨慕別人成功時會怎麼想？", "你有沒有曾經懷疑自己不夠好？", "你會為了夢想承受孤獨嗎？", "你更怕失敗，還是平庸？", "你覺得自己是自律的人嗎？", "你最想證明給誰看？"],
-            ["你最不想被別人知道的弱點是？", "你曾經最自卑的是什麼？", "你最害怕被拋棄嗎？", "你有討厭過自己嗎？", "你最後悔的一件事？", "你最難原諒自己的是什麼？", "你會用什麼方式逃避痛苦？", "當你脆弱時，你希望被安慰還是被理解？", "你最深的恐懼是什麼？", "你有沒有一個從來沒說出口的傷？"],
-            ["你相信靈魂伴侶嗎？", "你覺得自己活得真實嗎？", "你最想成為什麼樣的人？", "你覺得人生有意義嗎？", "你想被怎樣記住？", "你有恐懼死亡嗎？", "你覺得人來世上是來學什麼的？", "你覺得成熟是什麼？", "你有沒有一個一直追尋的答案？", "如果一切都會消失，你還會堅持什麼？"],
-            ["在朋友關係裡，你最害怕被誤解的是哪一點？", "你在群體裡通常會隱藏哪一面自己？", "你覺得自己在人際關係中最大的盲點是什麼？", "你最常在人前假裝沒事的是哪種情緒？", "你有沒有為了維持關係而演過一個不像自己的角色？", "你在社交場合最容易感到疲憊的是什麼時刻？", "如果大家都喜歡你，但沒有人真正懂你，你會滿足嗎？", "你最怕別人怎麼評價你？", "你在人際裡最不願承認的需求是什麼？", "你曾經有過『其實我不想合群』的時候嗎？"],
-            ["你有沒有曾經因為朋友的一句話偷偷難過？", "你最害怕在友情裡失去的是什麼？", "你有有沒有曾經覺得自己其實不夠被重視？", "你其實最希望哪一種人懂你？", "你最難說出口的依賴是什麼？", "當你覺得被忽略時，你通常會假裝沒事還是直接說？", "你曾經在人多的時候感到特別孤單嗎？", "你最害怕深夜想起的那種失落是什麼？", "你有沒有一段關係，表面過去了但其實心裡還沒？", "如果有人真的看穿你的脆弱，你會想靠近還是逃開？"]
+            ["你認為人生最重要的是什麼？為什麼？", "如果只能選一個：自由、金錢、愛、成就，你選哪個？", "你最不能接受的價值觀是什麼？", "你覺得伴侶和你價值觀不同，能走多遠？", "你覺得誠實和善良哪個更重要？", "你會為現實放棄理想嗎？", "你最重視『被理解』還是『被尊重』？", "你覺得一個人最大的成熟是什麼？", "你認為幸福是一種能力，還是一種運氣？", "你覺得人可以完全相信另一個人嗎？"],
+            ["你在愛裡最害怕的是什麼？", "你會為了愛改變自己嗎？", "你覺得安全感應該自己給還是對方給？", "你需要每天聯絡嗎？", "你怎麼定義背叛？", "你可以接受曖昧多久？", "你比較容易主動還是等待？", "當你喜歡一個人時，最明顯的表現是什麼？", "你最無法接受伴侶忽略你的哪種感受？", "你相信長久關係需要激情還是穩定？"],
+            ["你工作是為了錢還是成就感？", "你願意為升遷犧牲多少？", "你可以接受不喜歡的工作多久？", "你有野心嗎？多大？", "你羨慕別人成功時會怎麼想？", "你最害怕一輩子平凡嗎？", "你會把工作擺在人生第一順位嗎？", "你認為努力和運氣哪個更重要？", "你想成為被需要的人，還是不可取代的人？", "如果現在失去工作，你最先擔心的是什麼？"],
+            ["你最不想被別人知道的弱點是？", "你曾經最自卑的是什麼？", "你最害怕被拋棄嗎？", "你有討厭過自己嗎？", "你最後悔的一件事？", "你最難原諒自己的地方是什麼？", "你通常用什麼方式保護自己？", "你有過表面沒事、其實很痛的時候嗎？", "你最容易在哪種關係裡失去自己？", "你有沒有一個從沒真正放下的人或事？"],
+            ["你相信靈魂伴侶嗎？", "你覺得自己活得真實嗎？", "你最想成為什麼樣的人？", "你覺得人生有意義嗎？", "你想被怎樣記住？", "你有恐懼死亡嗎？", "你認為一個人怎樣才算真正自由？", "你覺得孤獨是缺陷還是禮物？", "你曾經有哪一刻覺得自己真正活著？", "你覺得愛一個人，到底是在愛對方，還是在照見自己？"],
+            ["在朋友關係裡，你最害怕被誤解的是哪一點？", "你在群體裡通常會隱藏哪一面自己？", "你覺得自己在人際關係中最大的盲點是什麼？", "你最不能接受朋友怎麼對你？", "你通常是維持關係的人，還是等別人靠近的人？", "你有沒有曾經在人前很會說話，私下卻覺得很空？", "你覺得有些朋友其實只是階段性的嗎？", "你最欣賞哪一種成熟的大人感？", "你在人群裡最常戴上的面具是什麼？", "你會為了融入一段關係而委屈自己嗎？"],
+            ["你有沒有曾經因為朋友的一句話偷偷難過？", "你最害怕在友情裡失去的是什麼？", "你有有沒有曾經覺得自己其實不夠被重視？", "你其實最希望別人怎麼理解你？", "你有過一段已經不聯絡，卻一直放在心裡的關係嗎？", "你最害怕深夜時突然想起誰？", "你會在低潮時主動求助嗎？", "你比較怕孤單，還是怕沒有人真的懂你？", "你最常在夜深時反覆想起的遺憾是什麼？", "你有沒有曾經明明很想念，卻不敢打擾的人？"]
         ];
 
         const themes = [
@@ -565,7 +605,7 @@
         }
 
         function updatePrevButton() {
-            document.getElementById('prevBtn').disabled = drawHistory.length === 0;
+            document.getElementById('prevBtn').disabled = drawHistory.length <= 1;
         }
 
         function updateProgressText() {
